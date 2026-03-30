@@ -20,7 +20,7 @@ public class Cliente {
         //SIGNIFICA QUE A id É UMA PK(PRIMARY KEY)E QUE GERA OS VALORES AUTOMÁTICOS
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private long id;
+        private Long id;
         private String nome;
         private String email;
         
@@ -31,18 +31,18 @@ public class Cliente {
     public Cliente() {
     }
        //construtor ok
-    public Cliente(long id, String nome, String email, String fone) {
+    public Cliente(Long id, String nome, String email, String fone) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.fone = fone;
     }
        //getters and setters ok
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

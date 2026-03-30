@@ -5,40 +5,79 @@
 package br.gm.raphael.OSApiApplication.api.controller;
 
 import br.gm.raphael.OSApiApplication.domain.model.Cliente;
+import br.gm.raphael.OSApiApplication.domain.repository.ClienteRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author digma
  */
-
 @RestController
 public class ClienteController {
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @GetMapping("/clientes/{id}")
+    public ResponseEntity<Cliente> buscar(@PathVariable Long id) {
+        //return clienteRepository.findAll();  
+        //return clienteRepository.findByNome("KGe");
+
+        //O tipo Optional indica que pode ou não estar nulo
+        Optional<Cliente> cliente = clienteRepository.findById(id);
+
+        if (cliente.isPresent()) {
+            return ResponseEntity.ok(cliente.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+    //Por meio desse comando do @PostMapping eu consigo acrescentar itens na base de dados
+
+    @PostMapping("/clientes")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cliente adicionar(@RequestBody Cliente cliente) {
+        return clienteRepository.save(cliente);
+    }
+
+    @PutMapping("/clientes/{id}")
+    public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody Cliente cliente) {
+
+        if (!clienteRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        cliente.setId(id);
+        cliente = clienteRepository.save(cliente);
+        return ResponseEntity.ok(cliente);
+    }
     
-    @PersistenceContext
-    private EntityManager manager;
-    
-   @GetMapping("/clientes")
-   public List<Cliente> listas(){
-   
-   return manager.createQuery("from Cliente", Cliente.class).getResultList(); 
-   }
-    
-//    List<Cliente> listaClientes;
-//    
-//    @GetMapping("/clientes")
-//    public List<Cliente> listas(){
-//        
-//        listaClientes = new ArrayList<Cliente>();
-//        listaClientes.add(new Cliente(1,"KGe","kge@teste.com","11-99999-9999"));
-//        listaClientes.add(new Cliente(1,"Maria", "maria@teste.com", "11-88888-8888"));
-//        listaClientes.add(new Cliente(1,"Joao", "joao@teste.com", "11-77777-7777"));
-//        
-//        return listaClientes;
-    
+    @DeleteMapping("/clientes/{id}")
+    public ResponseEntity<Void> excluir(@PathVariable Long id){
+        
+        if(!clienteRepository.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }
+        
+        clienteRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+        
+
 }
