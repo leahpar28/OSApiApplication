@@ -4,27 +4,40 @@
  */
 package br.gm.raphael.OSApiApplication.domain.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 /**
  *
  * @author digma
  */
+@Entity //O MALDITO ENTITY QUE EU ESQUECI HAHA
 public class Cliente {
     
+        //SIGNIFICA QUE A id É UMA PK(PRIMARY KEY)E QUE GERA OS VALORES AUTOMÁTICOS
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private long id;
         private String nome;
         private String email;
+        
+        @Column(name = "telefone")
         private String fone; 
 
+        //construtor  vazio ok
     public Cliente() {
     }
-      
+       //construtor ok
     public Cliente(long id, String nome, String email, String fone) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.fone = fone;
     }
-
+       //getters and setters ok
     public long getId() {
         return id;
     }
@@ -57,6 +70,7 @@ public class Cliente {
         this.fone = fone;
     }
 
+        //equals e hashcode ok
     @Override
     public int hashCode() {
         int hash = 7;
