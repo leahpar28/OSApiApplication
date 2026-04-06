@@ -21,4 +21,9 @@ public interface ClienteRepository extends JpaRepository<Cliente,Long> {
     
     List<Cliente> findByNome(String nome);
     List<Cliente> findByNomeContainingIgnoreCase(String nome);
+    
+    //COMO O EMAIL "TEORICAMENTE" NÃO SE REPETE, NÃO USO List<Cliente>
+    //OU SEJA, RESULTADO ÚNICO
+    Cliente findByEmail(String email);
+    
 }

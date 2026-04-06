@@ -6,6 +6,7 @@ package br.gm.raphael.OSApiApplication.api.controller;
 
 import br.gm.raphael.OSApiApplication.domain.model.Cliente;
 import br.gm.raphael.OSApiApplication.domain.repository.ClienteRepository;
+import br.gm.raphael.OSApiApplication.domain.service.ClienteService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
@@ -33,6 +34,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
+    
+    @Autowired
+    private ClienteService clienteService;
 
     @GetMapping("/clientes/{id}")
     public ResponseEntity<Cliente> buscar(@PathVariable Long id) {
@@ -57,7 +61,7 @@ public class ClienteController {
     @PostMapping("/clientes")
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
-        return clienteRepository.save(cliente);
+        return clienteService.salvar(cliente);
     }
     
     //Por meio desse comando do @PutMapping eu consigo editar itens já existentes na base de dados
@@ -70,7 +74,7 @@ public class ClienteController {
         }
 
         cliente.setId(id);
-        cliente = clienteRepository.save(cliente);
+        cliente = clienteService.salvar(cliente); 
         return ResponseEntity.ok(cliente);
     }
     
