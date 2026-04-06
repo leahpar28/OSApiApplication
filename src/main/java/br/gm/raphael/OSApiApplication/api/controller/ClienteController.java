@@ -59,7 +59,8 @@ public class ClienteController {
     public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
         return clienteRepository.save(cliente);
     }
-
+    
+    //Por meio desse comando do @PutMapping eu consigo editar itens já existentes na base de dados
     //--------------------PUT
     @PutMapping("/clientes/{id}")
     public ResponseEntity<Cliente> atualizar(@Valid @PathVariable Long id, @RequestBody Cliente cliente) {
