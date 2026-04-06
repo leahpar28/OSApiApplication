@@ -8,6 +8,7 @@ import br.gm.raphael.OSApiApplication.domain.model.Cliente;
 import br.gm.raphael.OSApiApplication.domain.repository.ClienteRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,16 +49,20 @@ public class ClienteController {
         }
 
     }
+    
+    
+    
     //Por meio desse comando do @PostMapping eu consigo acrescentar itens na base de dados
-
+    //--------------------POST
     @PostMapping("/clientes")
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente adicionar(@RequestBody Cliente cliente) {
+    public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
         return clienteRepository.save(cliente);
     }
 
+    //--------------------PUT
     @PutMapping("/clientes/{id}")
-    public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> atualizar(@Valid @PathVariable Long id, @RequestBody Cliente cliente) {
 
         if (!clienteRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
