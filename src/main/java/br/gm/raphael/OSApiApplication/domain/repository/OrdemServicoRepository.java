@@ -5,12 +5,16 @@
 package br.gm.raphael.OSApiApplication.domain.repository;
 
 import br.gm.raphael.OSApiApplication.domain.model.OrdemServico;
+//
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author digma
  */
+
+@Repository
 public interface OrdemServicoRepository extends JpaRepository<OrdemServico, Long> {
- 
 }

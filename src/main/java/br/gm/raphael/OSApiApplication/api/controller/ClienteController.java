@@ -7,10 +7,7 @@ package br.gm.raphael.OSApiApplication.api.controller;
 import br.gm.raphael.OSApiApplication.domain.model.Cliente;
 import br.gm.raphael.OSApiApplication.domain.repository.ClienteRepository;
 import br.gm.raphael.OSApiApplication.domain.service.ClienteService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +35,15 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
+    //BUSCA GERAL
+    @GetMapping("/clientes")
+    public List<Cliente> buscar(){
+        List<Cliente> cliente = clienteRepository.findAll();
+        
+        return cliente;
+    }
+    
+    //BUSCA POR 
     @GetMapping("/clientes/{id}")
     public ResponseEntity<Cliente> buscar(@PathVariable Long id) {
         //return clienteRepository.findAll();  

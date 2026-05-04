@@ -8,6 +8,7 @@ import br.gm.raphael.OSApiApplication.domain.model.OrdemServico;
 import br.gm.raphael.OSApiApplication.domain.model.StatusOrdemServico;
 import br.gm.raphael.OSApiApplication.domain.repository.OrdemServicoRepository;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +29,24 @@ public class OrdemServicoService {
         
         return ordemServicoRepository.save(ordemServico);
     }
+
+    public Optional<OrdemServico> encontrarPorId(Long id) {
+        
+        return ordemServicoRepository.findById(id);
+        
+    }
+    
+    
+    public OrdemServico atualizaOs(OrdemServico ordemServico) {
+        
+        return ordemServicoRepository.save(ordemServico);      
+    }
+     
+    public void excluir(Long id){        
+        ordemServicoRepository.deleteById(id);    
+    } 
+        
+
+
+
 }
