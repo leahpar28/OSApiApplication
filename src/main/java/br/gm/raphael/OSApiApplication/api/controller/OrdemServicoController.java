@@ -1,6 +1,8 @@
 package br.gm.raphael.OSApiApplication.api.controller;
 
+import br.gm.raphael.OSApiApplication.domain.dto.AtualizaStatusDTO;
 import br.gm.raphael.OSApiApplication.domain.model.OrdemServico;
+import br.gm.raphael.OSApiApplication.domain.model.StatusOrdemServico;
 import br.gm.raphael.OSApiApplication.domain.repository.OrdemServicoRepository;
 import br.gm.raphael.OSApiApplication.domain.service.OrdemServicoService;
 import jakarta.validation.Valid;
@@ -58,6 +60,20 @@ public class OrdemServicoController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    
+    @PutMapping("/atualiza-status/{ordemServicoID}")
+    public ResponseEntity<OrdemServico> atualizaStatus(
+            @PathVariable Long ordemServicoID,
+            @Valid @RequestBody AtualizaStatusDTO statusDTO){
+    
+    Optional<OrdemServico> optOS = ordemServicoService.atualizaStatus(ordemServicoID, statusDTO.status());
+    
+        if(optOS.isPresent()){
+            return ResponseEntity.ok(optOS.get());
+        } else {
+            return ResponseEntity.notFound().build();        
+        }    
     }
     
     @PutMapping("/{id}")

@@ -4,6 +4,7 @@
  */
 package br.gm.raphael.OSApiApplication.domain.service;
 
+import br.gm.raphael.OSApiApplication.domain.exception.DomainException;
 import br.gm.raphael.OSApiApplication.domain.model.OrdemServico;
 import br.gm.raphael.OSApiApplication.domain.model.StatusOrdemServico;
 import br.gm.raphael.OSApiApplication.domain.repository.OrdemServicoRepository;
@@ -45,8 +46,27 @@ public class OrdemServicoService {
     public void excluir(Long id){        
         ordemServicoRepository.deleteById(id);    
     } 
+    
+public Optional<OrdemServico> atualizaStatus(Long ordemServicoID, StatusOrdemServico status){
+    
+    Optional<OrdemServico> optOrdemServico = ordemServicoRepository.findById(ordemServicoID);
+    
+    if(optOrdemServico.isPresent()){
+        OrdemServico ordemServico = optOrdemServico.get();
         
+        if (ordemServico.getStatus()==StatusOrdemServico.ABERTA && status!=StatusOrdemServico.ABERTA){
+            
+            ordemServico.setStatus(status);
+            ordemServico.setDataFinalizacao(LocalDateTime.now());
+            ordemServicoRepository.save(ordemServico);
+            return Optional.of(ordemServico);
+        }else{
+            return Optional.empty();        
+        }
+    }else{
+        throw new DomainException("Não existe OS com id" + ordemServicoID);    
+    }
 
-
+}
 
 }
