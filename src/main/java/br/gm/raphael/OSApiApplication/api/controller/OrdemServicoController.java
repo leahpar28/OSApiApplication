@@ -61,6 +61,14 @@ public class OrdemServicoController {
             return ResponseEntity.notFound().build();
         }
     }
+  
+    //ESSA É A PESQUISA POR ORDEM DE SERVIÇO - TEM QUE FUNCIONAR!!!
+    @GetMapping("/cliente/{id}")
+    public List<OrdemServico> encontrarPorId(@PathVariable Long id){
+         List<OrdemServico> ordemServico = ordemServicoRepository.findByClienteId(id);
+         
+         return ordemServico;
+    }
     
     @PutMapping("/atualiza-status/{ordemServicoID}")
     public ResponseEntity<OrdemServico> atualizaStatus(

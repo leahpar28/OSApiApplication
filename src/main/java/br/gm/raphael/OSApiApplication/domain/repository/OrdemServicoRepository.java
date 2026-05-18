@@ -17,4 +17,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrdemServicoRepository extends JpaRepository<OrdemServico, Long> {
+    
+    //ACRESCENTEI A LINHA DE BAIXO - PUXAR POR CLIENTE ID
+    List<OrdemServico> findByClienteId(Long id); 
 }
